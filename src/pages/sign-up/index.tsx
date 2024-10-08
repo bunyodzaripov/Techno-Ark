@@ -1,11 +1,47 @@
 import { Button, Form, Input } from "antd";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import SignInImg from "../../assets/sign-in.jpg";
 import { ISignUp } from "@types";
+import { auth } from "@service";
+import { openNotification } from "@utils";
 
 const Index = () => {
-   const onFinish = (values: ISignUp) => {
-      console.log("Success:", values);
+   const navigate = useNavigate();
+
+   const handleSubmit = async (values: ISignUp) => {
+      try {
+         const res = await auth.sign_up(values);
+         if (res.status === 201) {
+            let access_token = res?.data?.data.tokens.access_token;
+            let userId = res?.data?.data?.data?.id;
+            localStorage.setItem("access_token", access_token);
+            localStorage.setItem("userId", userId);
+            navigate("/admin-layout");
+            openNotification({
+               type: "success",
+               message: "Sign up successfully",
+               description: "You have successfully signed up",
+            });
+         }
+      } catch (error: any) {
+         if (error.response) {
+            if (error.response.status === 400) {
+               openNotification({
+                  type: "error",
+                  message: "Sign up failed",
+                  description: "Login or password is incorrect",
+               });
+            } else {
+               openNotification({
+                  type: "error",
+                  message: "Server error",
+                  description: "Server error please try again",
+               });
+            }
+         } else {
+            console.log(error);
+         }
+      }
    };
 
    return (
@@ -18,7 +54,7 @@ const Index = () => {
                <h1 className="text-3xl font-semibold mb-4 text-[#c2410c]">
                   Register
                </h1>
-               <Form className="w-[500px]" onFinish={onFinish}>
+               <Form className="w-[400px]" onFinish={handleSubmit}>
                   <Form.Item
                      label="First name"
                      name="first_name"

@@ -1,11 +1,47 @@
 import { Button, Form, Input } from "antd";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import SignInImg from "../../assets/sign-in.jpg";
 import { ISignIn } from "@types";
+import { auth } from "@service";
+import { openNotification } from "@utils";
 
 const Index = () => {
-   const onFinish = (values: ISignIn) => {
-      console.log("Success:", values);
+   const navigate = useNavigate();
+
+   const handleSubmit = async (values: ISignIn) => {
+      try {
+         const res = await auth.sign_in(values);
+         let access_token = res?.data?.data.tokens.access_token;
+         let userId = res?.data?.data?.data?.id;
+         localStorage.setItem("access_token", access_token);
+         localStorage.setItem("userId", userId);
+         if (res.status === 201) {
+            openNotification({
+               type: "success",
+               message: "Sign in successfully",
+               description: "You have successfully signed in",
+            });
+            navigate("/admin-layout");
+         }
+      } catch (error: any) {
+         if (error.response) {
+            if (error.response.status === 400) {
+               openNotification({
+                  type: "error",
+                  message: "Sign in failed",
+                  description: "Login or password is incorrect",
+               });
+            } else {
+               openNotification({
+                  type: "error",
+                  message: "Server error",
+                  description: "Server error please try again",
+               });
+            }
+         } else {
+            console.log(error);
+         }
+      }
    };
 
    return (
@@ -18,7 +54,7 @@ const Index = () => {
                <h1 className="text-3xl font-semibold mb-4  text-[#c2410c]">
                   Login
                </h1>
-               <Form className="w-[300px]" name="basic" onFinish={onFinish}>
+               <Form className="w-[300px]" name="basic" onFinish={handleSubmit}>
                   <Form.Item
                      label="Phone number"
                      name="phone_number"

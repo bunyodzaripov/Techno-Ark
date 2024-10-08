@@ -11,7 +11,7 @@
          "@components": ["./src/components"],
          "@utils": ["./src/utils"],
          "@types": ["./src/types"],
-         "@services": ["./src/services"]
+         "@service": ["./src/service"]
       },
       /* Bundler mode */
       "moduleResolution": "bundler",

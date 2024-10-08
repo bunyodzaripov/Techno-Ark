@@ -1,3 +1,4 @@
 import SignIn from "./sign-in";
 import SignUp from "./sign-up";
-export { SignIn, SignUp };
+import AdminLayout from "./admin-layout";
+export { SignIn, SignUp, AdminLayout };

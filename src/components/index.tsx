@@ -1,3 +1,3 @@
 import Popconfirm from "./popconfirm";
-
-export { Popconfirm };
+import GlobalTable from "./global-table";
+export { Popconfirm, GlobalTable };

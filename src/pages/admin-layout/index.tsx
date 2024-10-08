@@ -37,7 +37,7 @@ const App = () => {
                   <h1
                      style={{
                         color: "#fff",
-                        fontSize: "18px",
+                        fontSize: "20px",
                         fontWeight: "semibold",
                         marginLeft: "20px",
                      }}
@@ -62,7 +62,7 @@ const App = () => {
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
-                  background: colorBgContainer,
+                  //    background: colorBgContainer,
                }}
             >
                <Button
@@ -75,6 +75,7 @@ const App = () => {
                      fontSize: "16px",
                      width: 64,
                      height: 64,
+                     color: "#fff",
                   }}
                />
 
@@ -96,6 +97,7 @@ const App = () => {
                         fontSize: "16px",
                         width: 64,
                         height: 64,
+                        color: "#fff",
                      }}
                   />
                </Popconfirm>

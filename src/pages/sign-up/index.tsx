@@ -145,8 +145,9 @@ const Index = () => {
                      }}
                   >
                      <Button
+                        type="primary"
                         htmlType="submit"
-                        className="w-full mt-4 bg-[#c2410c] text-white"
+                        className="w-full mt-"
                         size="large"
                      >
                         Submit

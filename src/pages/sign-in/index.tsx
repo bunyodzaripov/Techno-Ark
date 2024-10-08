@@ -1,5 +1,5 @@
 import { Button, Form, Input } from "antd";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import SignInImg from "../../assets/sign-in.jpg";
 import { ISignIn } from "@types";
 import { auth } from "@service";
@@ -99,8 +99,9 @@ const Index = () => {
                      }}
                   >
                      <Button
+                        type="primary"
                         htmlType="submit"
-                        className="w-full mt-4 bg-[#c2410c] text-white"
+                        className="w-full mt-"
                         size="large"
                      >
                         Submit
@@ -110,12 +111,12 @@ const Index = () => {
                      <p className="text-sm text-gray-500">
                         Don't have an account?
                      </p>
-                     <NavLink
+                     <Link
                         to="/sign-up"
                         className={"text-[#c2410c] bold text-lg"}
                      >
                         Register
-                     </NavLink>
+                     </Link>
                   </div>
                </Form>
             </div>

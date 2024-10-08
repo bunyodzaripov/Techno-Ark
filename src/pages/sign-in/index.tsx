@@ -1,5 +1,5 @@
 import { Button, Form, Input } from "antd";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SignInImg from "../../assets/sign-in.jpg";
 import { ISignIn } from "@types";
 import { auth } from "@service";

@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { Button, Input } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
-import { GlobalTable } from "@components";
+import { Button, Input } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
+import { GlobalTable, Popconfirm } from "@components";
 import { category } from "@service";
 import { Category } from "@modals";
+import { openNotification } from "@utils";
 
 const Index = () => {
    const [open, setOpen] = useState(false);
@@ -46,6 +48,24 @@ const Index = () => {
          setData(res.data?.data?.categories);
       }
    };
+   const deleteData = async (id: number) => {
+      try {
+         const res = await category.delete(id);
+         if (res.status === 200) {
+            getData();
+            openNotification({
+               type: "success",
+               message: "Category deleted successfully",
+            });
+         }
+      } catch (error) {
+         openNotification({
+            type: "error",
+            message: "Something went wrong",
+         });
+         console.log(error);
+      }
+   };
    const handleTableChange = (pagination: any) => {
       const { current, pageSize } = pagination;
       setParams((prev) => ({
@@ -70,14 +90,36 @@ const Index = () => {
 
    const columns = [
       {
-         title: "ID",
-         dataIndex: "id",
-         key: "id",
+         title: "No",
+         dataIndex: "no",
+         key: "no",
+         render: (_: any, __: any, index: number) =>
+            (params.page - 1) * params.limit + index + 1,
       },
       {
          title: "Name",
          dataIndex: "name",
          key: "name",
+      },
+      {
+         title: "Action",
+         dataIndex: "action",
+         key: "action",
+         render: (_: any, record: any) => (
+            <div>
+               <Popconfirm
+                  title="Delete category?"
+                  description="Are you sure to delete this category?"
+                  okText="Yes"
+                  cancelText="No"
+                  onConfirm={() => deleteData(record.id)}
+               >
+                  <Button>
+                     <DeleteOutlined />
+                  </Button>
+               </Popconfirm>
+            </div>
+         ),
       },
    ];
 

@@ -1,14 +1,14 @@
 import { Button, Form, Input } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import SignInImg from "../../assets/sign-in.jpg";
-import { ISignIn } from "@types";
 import { auth } from "@service";
 import { openNotification } from "@utils";
+import { SignIn } from "@types";
 
 const Index = () => {
    const navigate = useNavigate();
 
-   const handleSubmit = async (values: ISignIn) => {
+   const handleSubmit = async (values: SignIn) => {
       try {
          const res = await auth.sign_in(values);
          let access_token = res?.data?.data.tokens.access_token;

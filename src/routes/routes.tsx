@@ -12,18 +12,18 @@ const admin = [
       icon: <ProductOutlined />,
    },
    {
-      content: "Category",
+      content: "Categorys",
       path: "/admin-layout/category",
       icon: <AppstoreOutlined />,
    },
    {
-      content: "Brand",
-      path: "/admin-layout/brand",
+      content: "Brands",
+      path: "/admin-layout/brands",
       icon: <AppstoreOutlined />,
    },
    {
-      content: "Brand category",
-      path: "/admin-layout/brand-category",
+      content: "Brand categories",
+      path: "/admin-layout/brand-categories",
       icon: <AppstoreOutlined />,
    },
    {
@@ -32,8 +32,8 @@ const admin = [
       icon: <AppstoreOutlined />,
    },
    {
-      content: "Stock",
-      path: "/admin-layout/stock",
+      content: "Stocks",
+      path: "/admin-layout/stocks",
       icon: <StockOutlined />,
    },
    {

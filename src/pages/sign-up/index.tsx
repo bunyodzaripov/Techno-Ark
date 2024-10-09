@@ -1,14 +1,14 @@
 import { Button, Form, Input } from "antd";
 import { NavLink, useNavigate } from "react-router-dom";
 import SignInImg from "../../assets/sign-in.jpg";
-import { ISignUp } from "@types";
 import { auth } from "@service";
 import { openNotification } from "@utils";
+import { SignUp } from "@types";
 
 const Index = () => {
    const navigate = useNavigate();
 
-   const handleSubmit = async (values: ISignUp) => {
+   const handleSubmit = async (values: SignUp) => {
       try {
          const res = await auth.sign_up(values);
          if (res.status === 201) {

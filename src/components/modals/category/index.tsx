@@ -1,28 +1,58 @@
+import { useEffect } from "react";
 import { Button, Modal, Form, Input } from "antd";
 import { category } from "@service";
 import { openNotification } from "@utils";
+import { props } from "@types";
 
-const Index = ({ open, handleClose, getData }: any) => {
+const Index = ({ open, handleClose, getData, update }: props) => {
    const [form] = Form.useForm();
 
+   useEffect(() => {
+      if (update?.id) {
+         form.setFieldsValue(update);
+      } else {
+         form.resetFields();
+      }
+   }, [update, form]);
+
    const handleSubmit = async (values: string) => {
-      try {
-         const res = await category.create(values);
-         if (res.status === 201) {
-            handleClose();
-            getData();
-            form.resetFields();
+      if (update?.id) {
+         try {
+            const res = await category.update(update.id, values);
+            if (res.status === 200) {
+               handleClose();
+               getData();
+               openNotification({
+                  type: "success",
+                  message: "Category updated successfully",
+               });
+            }
+         } catch (error) {
             openNotification({
-               type: "success",
-               message: "Category created successfully",
+               type: "error",
+               message: "Something went wrong",
             });
+            console.log(error);
          }
-      } catch (error) {
-         openNotification({
-            type: "error",
-            message: "Something went wrong",
-         });
-         console.log(error);
+      } else {
+         try {
+            const res = await category.create(values);
+            if (res.status === 201) {
+               handleClose();
+               getData();
+               form.resetFields();
+               openNotification({
+                  type: "success",
+                  message: "Category created successfully",
+               });
+            }
+         } catch (error) {
+            openNotification({
+               type: "error",
+               message: "Something went wrong",
+            });
+            console.log(error);
+         }
       }
    };
 
@@ -30,7 +60,7 @@ const Index = ({ open, handleClose, getData }: any) => {
       <>
          <Modal
             open={open}
-            title="Add new category"
+            title={update?.id ? "Update category" : "Add new category"}
             onCancel={handleClose}
             width={500}
             footer={
@@ -42,7 +72,7 @@ const Index = ({ open, handleClose, getData }: any) => {
                   }}
                >
                   <Button type="primary" form="basic" htmlType="submit">
-                     Add
+                     {update?.id ? "Update" : "Submit"}
                   </Button>
                   <Button onClick={handleClose}>Cancel</Button>
                </div>

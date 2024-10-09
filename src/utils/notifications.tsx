@@ -1,11 +1,11 @@
 import { notification } from "antd";
-import { NotificationType } from "@types";
+import { Notification } from "@types";
 
 export const openNotification = ({
    type,
    message,
    description,
-}: NotificationType): void => {
+}: Notification): void => {
    notification[type]({
       message,
       description,

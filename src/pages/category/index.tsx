@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Button, Input } from "antd";
-import { DeleteOutlined } from "@ant-design/icons";
-import { GlobalTable, Popconfirm } from "@components";
+import { Button, Tooltip } from "antd";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { GlobalTable, Popconfirm, GlobalSearch } from "@components";
 import { category } from "@service";
 import { Category } from "@modals";
 import { openNotification } from "@utils";
+import { record } from "@types";
 
 const Index = () => {
    const [open, setOpen] = useState(false);
    const [data, setData] = useState([]);
    const [total, setTotal] = useState();
+   const [update, setUpdate] = useState({});
    const [params, setParams] = useState({
       page: 1,
       limit: 5,
@@ -40,6 +42,7 @@ const Index = () => {
    };
    const handleClose = () => {
       setOpen(false);
+      setUpdate({});
    };
    const getData = async () => {
       const res = await category.get(params);
@@ -66,6 +69,10 @@ const Index = () => {
          console.log(error);
       }
    };
+   const editData = (data: any) => {
+      setUpdate(data);
+      openModal();
+   };
    const handleTableChange = (pagination: any) => {
       const { current, pageSize } = pagination;
       setParams((prev) => ({
@@ -78,14 +85,11 @@ const Index = () => {
       current_params.set("limit", `${pageSize}`);
       navigate(`?${current_params}`);
    };
-   const handleSearch = (event: any) => {
+   const handleSearch = (value: string) => {
       setParams((prev) => ({
          ...prev,
-         search: event.target.value,
+         search: value,
       }));
-      const search_params = new URLSearchParams(search);
-      search_params.set("search", event.target.value);
-      navigate(`?${search_params}`);
    };
 
    const columns = [
@@ -93,7 +97,7 @@ const Index = () => {
          title: "No",
          dataIndex: "no",
          key: "no",
-         render: (_: any, __: any, index: number) =>
+         render: (_: any, __: record, index: number) =>
             (params.page - 1) * params.limit + index + 1,
       },
       {
@@ -105,8 +109,8 @@ const Index = () => {
          title: "Action",
          dataIndex: "action",
          key: "action",
-         render: (_: any, record: any) => (
-            <div>
+         render: (_: any, record: record) => (
+            <div className="flex gap-6">
                <Popconfirm
                   title="Delete category?"
                   description="Are you sure to delete this category?"
@@ -114,10 +118,17 @@ const Index = () => {
                   cancelText="No"
                   onConfirm={() => deleteData(record.id)}
                >
-                  <Button>
-                     <DeleteOutlined />
-                  </Button>
+                  <Tooltip title="Delete" color="#c2410c">
+                     <Button>
+                        <DeleteOutlined />
+                     </Button>
+                  </Tooltip>
                </Popconfirm>
+               <Tooltip title="Edit" color="#c2410c">
+                  <Button onClick={() => editData(record)}>
+                     <EditOutlined />
+                  </Button>
+               </Tooltip>
             </div>
          ),
       },
@@ -125,13 +136,17 @@ const Index = () => {
 
    return (
       <>
-         <Category open={open} handleClose={handleClose} getData={getData} />
+         <Category
+            open={open}
+            handleClose={handleClose}
+            update={update}
+            getData={getData}
+         />
          <div className="flex justify-between mb-10">
-            <Input
+            <GlobalSearch
                placeholder="Search category..."
-               className="w-[300px]"
-               onChange={handleSearch}
-               allowClear
+               searchParamKey="search"
+               onSearch={handleSearch}
             />
             <Button
                type="primary"

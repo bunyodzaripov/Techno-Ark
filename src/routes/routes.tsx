@@ -3,6 +3,9 @@ import {
    SettingOutlined,
    StockOutlined,
    ProductOutlined,
+   TagOutlined,
+   TagsOutlined,
+   AppstoreAddOutlined,
 } from "@ant-design/icons";
 
 const admin = [
@@ -12,24 +15,24 @@ const admin = [
       icon: <ProductOutlined />,
    },
    {
-      content: "Categorys",
+      content: "Category",
       path: "/admin-layout/category",
       icon: <AppstoreOutlined />,
    },
    {
       content: "Brands",
       path: "/admin-layout/brands",
-      icon: <AppstoreOutlined />,
+      icon: <TagOutlined />,
    },
    {
-      content: "Brand categories",
-      path: "/admin-layout/brand-categories",
-      icon: <AppstoreOutlined />,
+      content: "Brand category",
+      path: "/admin-layout/brand-category",
+      icon: <TagsOutlined />,
    },
    {
       content: "Ads",
       path: "/admin-layout/ads",
-      icon: <AppstoreOutlined />,
+      icon: <AppstoreAddOutlined />,
    },
    {
       content: "Stocks",

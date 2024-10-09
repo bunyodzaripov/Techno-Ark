@@ -3,6 +3,7 @@ import { Button, Input } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
 import { GlobalTable } from "@components";
 import { category } from "@service";
+import { Category } from "@modals";
 
 const Index = () => {
    const [open, setOpen] = useState(false);
@@ -33,7 +34,10 @@ const Index = () => {
    }, [search]);
 
    const openModal = () => {
-      setOpen(open);
+      setOpen(true);
+   };
+   const handleClose = () => {
+      setOpen(false);
    };
    const getData = async () => {
       const res = await category.get(params);
@@ -66,7 +70,7 @@ const Index = () => {
 
    const columns = [
       {
-         title: "No.",
+         title: "ID",
          dataIndex: "id",
          key: "id",
       },
@@ -79,6 +83,7 @@ const Index = () => {
 
    return (
       <>
+         <Category open={open} handleClose={handleClose} getData={getData} />
          <div className="flex justify-between mb-10">
             <Input
                placeholder="Search category..."

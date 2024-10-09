@@ -11,5 +11,6 @@ export const openNotification = ({
       description,
       placement: "topRight",
       duration: 2,
+      showProgress: true,
    });
 };

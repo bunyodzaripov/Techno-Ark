@@ -12,6 +12,7 @@ export default defineConfig({
          { find: "@service", replacement: "/src/service" },
          { find: "@utils", replacement: "/src/utils" },
          { find: "@types", replacement: "/src/types" },
+         { find: "@modals", replacement: "/src/components/modals" },
       ],
    },
 });

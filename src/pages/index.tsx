@@ -5,4 +5,14 @@ import Products from "./products";
 import Category from "./category";
 import SubCategory from "./sub-category";
 import Brands from "./brands";
-export { SignIn, SignUp, AdminLayout, Products, Category, SubCategory, Brands };
+import BrandCategory from "./brand-category";
+export {
+   SignIn,
+   SignUp,
+   AdminLayout,
+   Products,
+   Category,
+   SubCategory,
+   Brands,
+   BrandCategory,
+};

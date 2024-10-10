@@ -3,6 +3,10 @@ export interface Update {
    id: number;
    name: string;
    parent_category_id?: number;
+   description?: string;
+   file?: File | string;
+   categoryId: number;
+   category_id: number;
 }
 
 export interface ModalProps {
@@ -17,6 +21,7 @@ export interface ModalProps {
 ///////////////////////// Global Category Table ////////////////////////
 export interface Record extends Update {
    createdAt: string;
+   image?: any;
    lastUpdateAt: string;
 }
 

@@ -1,13 +1,19 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Button, Tooltip } from "antd";
+import { Button, Tooltip, Image } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { GlobalTable, Popconfirm, GlobalSearch } from "@components";
 import { brands, category } from "@service";
 import { Brands } from "@modals";
 import { openNotification } from "@utils";
 import { Record, Update, Pagination } from "@types";
-const initialValue = { id: 0, name: "", parent_category_id: 0 };
+const initialValue = {
+   id: 0,
+   name: "",
+   description: "",
+   categoryId: 0,
+   category_id: 0,
+};
 
 const Index = () => {
    const [open, setOpen] = useState(false);
@@ -118,6 +124,20 @@ const Index = () => {
          title: "Decription",
          dataIndex: "description",
          key: "description",
+      },
+      {
+         title: "Image",
+         dataIndex: "image",
+         key: "image",
+         render: (_: string, record: Record) => (
+            <Image
+               src={record?.image}
+               alt="image"
+               width={50}
+               height={50}
+               style={{ objectFit: "cover" }}
+            />
+         ),
       },
       {
          title: "Action",

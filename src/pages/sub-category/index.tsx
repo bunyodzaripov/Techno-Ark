@@ -7,7 +7,13 @@ import { subCategory } from "@service";
 import { SubCategory } from "@modals";
 import { openNotification } from "@utils";
 import { Record, Update, Pagination } from "@types";
-const initialValue = { id: 0, name: "", parent_category_id: 0 };
+const initialValue = {
+   id: 0,
+   name: "",
+   parent_category_id: 0,
+   categoryId: 0,
+   category_id: 0,
+};
 
 const Index = () => {
    const { id } = useParams();

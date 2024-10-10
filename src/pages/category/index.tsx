@@ -7,7 +7,7 @@ import { category } from "@service";
 import { Category } from "@modals";
 import { openNotification } from "@utils";
 import { Record, Update, Pagination } from "@types";
-const initialValue = { id: 0, name: "" };
+const initialValue = { id: 0, name: "", categoryId: 0, category_id: 0 };
 
 const Index = () => {
    const [open, setOpen] = useState(false);

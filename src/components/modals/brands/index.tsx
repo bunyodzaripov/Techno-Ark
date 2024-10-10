@@ -1,16 +1,8 @@
 import { useEffect, useState } from "react";
-import { Button, Modal, Form, Input, Select, Upload } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import { Button, Modal, Form, Input, Select } from "antd";
 import { brands } from "@service";
 import { openNotification } from "@utils";
-import { ModalProps } from "@types";
-
-interface BrandValues {
-   name: string;
-   description: string;
-   categoryId: string;
-   file: string | File;
-}
+import { ModalProps, BrandValues } from "@types";
 
 const Index = ({
    open,
@@ -26,6 +18,8 @@ const Index = ({
       if (update?.id) {
          form.setFieldsValue({
             name: update.name,
+            description: update.description,
+            categoryId: update.category_id,
          });
       } else {
          form.resetFields();
@@ -38,13 +32,13 @@ const Index = ({
    };
 
    const handleSubmit = async (values: BrandValues) => {
-      console.log(values, "values brands");
-
-      const formData = new FormData();
+      const formData: any = new FormData();
       formData.append("name", values.name);
       formData.append("categoryId", values.categoryId);
       formData.append("description", values.description);
-      formData.append("file", file);
+      if (file) {
+         formData.append("file", file);
+      }
       if (update?.id) {
          try {
             const res = await brands.update(update.id, values);
@@ -53,7 +47,7 @@ const Index = ({
                getData();
                openNotification({
                   type: "success",
-                  message: "Category updated successfully",
+                  message: "Brand updated successfully",
                });
             }
          } catch (error) {
@@ -116,7 +110,7 @@ const Index = ({
                   rules={[
                      {
                         required: true,
-                        message: "Please input category name!",
+                        message: "Please input brand name!",
                      },
                   ]}
                >

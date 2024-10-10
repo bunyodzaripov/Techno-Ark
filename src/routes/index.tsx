@@ -5,7 +5,15 @@ import {
    RouterProvider,
 } from "react-router-dom";
 import App from "../App";
-import { SignIn, SignUp, AdminLayout, Products, Category } from "@pages";
+import {
+   SignIn,
+   SignUp,
+   AdminLayout,
+   Products,
+   SubCategory,
+   Category,
+} from "@pages";
+
 const Index = () => {
    const router = createBrowserRouter(
       createRoutesFromElements(
@@ -15,6 +23,7 @@ const Index = () => {
             <Route path="/admin-layout" element={<AdminLayout />}>
                <Route index element={<Products />} />
                <Route path="category" element={<Category />} />
+               <Route path="category/:id" element={<SubCategory />} />
             </Route>
          </Route>
       )

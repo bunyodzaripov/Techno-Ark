@@ -1,10 +1,16 @@
 import { useEffect } from "react";
 import { Button, Modal, Form, Input } from "antd";
-import { category } from "@service";
+import { subCategory } from "@service";
 import { openNotification } from "@utils";
 import { ModalProps } from "@types";
 
-const Index = ({ open, handleClose, getData, update }: ModalProps) => {
+const Index = ({
+   open,
+   handleClose,
+   getData,
+   update,
+   parentId,
+}: ModalProps) => {
    const [form] = Form.useForm();
 
    useEffect(() => {
@@ -17,16 +23,19 @@ const Index = ({ open, handleClose, getData, update }: ModalProps) => {
       }
    }, [update, form]);
 
-   const handleSubmit = async (values: string) => {
+   const handleSubmit = async (values: any) => {
       if (update?.id) {
          try {
-            const res = await category.update(update.id, values);
+            const res = await subCategory.update(update.id, {
+               name: values.name,
+               parent_category_id: parentId,
+            });
             if (res.status === 200) {
                handleClose();
                getData();
                openNotification({
                   type: "success",
-                  message: "Category updated successfully",
+                  message: "Sub Category updated successfully",
                });
             }
          } catch (error) {
@@ -38,14 +47,17 @@ const Index = ({ open, handleClose, getData, update }: ModalProps) => {
          }
       } else {
          try {
-            const res = await category.create(values);
+            const res = await subCategory.create({
+               name: values.name,
+               parent_category_id: parentId,
+            });
             if (res.status === 201) {
                handleClose();
                getData();
                form.resetFields();
                openNotification({
                   type: "success",
-                  message: "Category created successfully",
+                  message: "Sub Category created successfully",
                });
             }
          } catch (error) {
@@ -62,7 +74,7 @@ const Index = ({ open, handleClose, getData, update }: ModalProps) => {
       <>
          <Modal
             open={open}
-            title={update?.id ? "Update category" : "Add new category"}
+            title={update?.id ? "Update subcategory" : "Add new subcategory"}
             onCancel={handleClose}
             width={500}
             footer={
@@ -82,7 +94,7 @@ const Index = ({ open, handleClose, getData, update }: ModalProps) => {
          >
             <Form form={form} id="basic" name="basic" onFinish={handleSubmit}>
                <Form.Item
-                  label="Category name"
+                  label="Subcategory name"
                   name="name"
                   labelCol={{ span: 24 }}
                   wrapperCol={{ span: 24 }}

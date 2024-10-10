@@ -1,20 +1,28 @@
 ///////////////////////// Modal ////////////////////////
-export interface update {
+export interface Update {
    id: number;
    name: string;
+   parent_category_id?: number;
 }
 
-export interface props {
+export interface ModalProps {
+   parentId?: number;
    open: boolean;
    handleClose: () => void;
    getData: () => void;
-   update: update | undefined | any;
+   update: Update | undefined;
 }
 
-///////////////////////// Page ////////////////////////
-export interface record {
+///////////////////////// Global Category Table ////////////////////////
+export interface Record extends Update {
    createdAt: string;
-   id: number;
    lastUpdateAt: string;
-   name: string;
+}
+
+export interface Pagination {
+   current: number;
+   pageSize: number;
+   total: undefined;
+   showSizeChanger: boolean;
+   pageSizeOptions: number[];
 }

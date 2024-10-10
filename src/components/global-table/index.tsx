@@ -1,8 +1,11 @@
 import { Table } from "antd";
 
-export default function GlobalTable(props: any) {
-   const { columns, dataSource, pagination, handleChange } = props;
-
+export default function GlobalTable({
+   columns,
+   dataSource,
+   pagination,
+   handleChange,
+}: any) {
    return (
       <Table
          columns={columns}

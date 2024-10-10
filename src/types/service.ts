@@ -1,6 +1,6 @@
 import { SignIn, SignUp } from "./auth";
 
-interface params {
+interface Params {
    page?: number;
    limit?: number;
    search?: string;
@@ -8,7 +8,7 @@ interface params {
 
 export interface Category {
    create: (data: string) => Promise<any>;
-   get: (params: params) => Promise<any>;
+   get: (params: Params) => Promise<any>;
    update: (id: number, data: string) => Promise<any>;
    delete: (id: number) => Promise<any>;
 }
@@ -16,4 +16,11 @@ export interface Category {
 export interface Auth {
    sign_in: (data: SignIn) => Promise<any>;
    sign_up: (data: SignUp) => Promise<any>;
+}
+
+export interface SubCategory {
+   create: (data: any) => Promise<any>;
+   get: (pardentId: number, params: Params) => Promise<any>;
+   update: (id: number, data: any) => Promise<any>;
+   delete: (id: number) => Promise<any>;
 }

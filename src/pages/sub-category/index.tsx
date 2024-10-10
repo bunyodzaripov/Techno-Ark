@@ -1,23 +1,24 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Button, Tooltip } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { GlobalTable, Popconfirm, GlobalSearch } from "@components";
-import { category } from "@service";
-import { Category } from "@modals";
+import { subCategory } from "@service";
+import { SubCategory } from "@modals";
 import { openNotification } from "@utils";
 import { Record, Update, Pagination } from "@types";
-const initialValue = { id: 0, name: "" };
+const initialValue = { id: 0, name: "", parent_category_id: 0 };
 
 const Index = () => {
+   const { id } = useParams();
    const [open, setOpen] = useState(false);
    const [data, setData] = useState([]);
    const [total, setTotal] = useState();
    const [update, setUpdate] = useState<Update>(initialValue);
    const [params, setParams] = useState({
-      page: 1,
-      limit: 5,
       search: "",
+      limit: 5,
+      page: 1,
    });
    const { search } = useLocation();
    const navigate = useNavigate();
@@ -46,20 +47,20 @@ const Index = () => {
       setUpdate(initialValue);
    };
    const getData = async () => {
-      const res = await category.get(params);
+      const res = await subCategory.get(Number(id), params);
       if (res.status === 200) {
+         setData(res.data?.data?.subcategories);
          setTotal(res.data?.data?.count);
-         setData(res.data?.data?.categories);
       }
    };
    const deleteData = async (id: number) => {
       try {
-         const res = await category.delete(id);
+         const res = await subCategory.delete(id);
          if (res.status === 200) {
             getData();
             openNotification({
                type: "success",
-               message: "Category deleted successfully",
+               message: "Sub Category deleted successfully",
             });
          }
       } catch (error) {
@@ -102,7 +103,7 @@ const Index = () => {
             (params.page - 1) * params.limit + index + 1,
       },
       {
-         title: "Name",
+         title: "Subcategory Name",
          dataIndex: "name",
          key: "name",
          onCell: (record: Record) => ({
@@ -117,8 +118,8 @@ const Index = () => {
          render: (_: string, record: Record) => (
             <div className="flex gap-6">
                <Popconfirm
-                  title="Delete category?"
-                  description="Are you sure to delete this category?"
+                  title="Delete subcategory?"
+                  description="Are you sure to delete this subcategory?"
                   okText="Yes"
                   cancelText="No"
                   onConfirm={() => deleteData(record.id)}
@@ -141,15 +142,16 @@ const Index = () => {
 
    return (
       <>
-         <Category
+         <SubCategory
             open={open}
             handleClose={handleClose}
             update={update}
             getData={getData}
+            parentId={Number(id)}
          />
          <div className="flex justify-between mb-10">
             <GlobalSearch
-               placeholder="Search category..."
+               placeholder="Search Sub Category..."
                searchParamKey="search"
                onSearch={handleSearch}
             />
@@ -158,7 +160,7 @@ const Index = () => {
                onClick={openModal}
                className="rounded-lg px-4 py-5"
             >
-               <span className="ml-2">Add Category</span>
+               <span className="ml-2">Add Subcategory</span>
             </Button>
          </div>
          <GlobalTable

@@ -4,6 +4,11 @@ import { subCategory } from "@service";
 import { openNotification } from "@utils";
 import { ModalProps } from "@types";
 
+interface values {
+   name: string;
+   parent_category_id: number;
+}
+
 const Index = ({
    open,
    handleClose,
@@ -23,7 +28,7 @@ const Index = ({
       }
    }, [update, form]);
 
-   const handleSubmit = async (values: any) => {
+   const handleSubmit = async (values: values) => {
       if (update?.id) {
          try {
             const res = await subCategory.update(update.id, {

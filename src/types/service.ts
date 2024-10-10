@@ -6,6 +6,11 @@ interface Params {
    search?: string;
 }
 
+interface SubData {
+   name: string;
+   parent_category_id?: number;
+}
+
 export interface Category {
    create: (data: string) => Promise<any>;
    get: (params: Params) => Promise<any>;
@@ -19,8 +24,16 @@ export interface Auth {
 }
 
 export interface SubCategory {
-   create: (data: any) => Promise<any>;
+   create: (data: SubData) => Promise<any>;
    get: (pardentId: number, params: Params) => Promise<any>;
-   update: (id: number, data: any) => Promise<any>;
+   update: (id: number, data: SubData) => Promise<any>;
    delete: (id: number) => Promise<any>;
+}
+
+export interface Brands {
+   create: (data: string) => Promise<any>;
+   get: (params: Params) => Promise<any>;
+   update: (id: number, data: string) => Promise<any>;
+   delete: (id: number) => Promise<any>;
+   getCategory: (id: number) => Promise<any>;
 }

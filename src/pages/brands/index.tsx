@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Button, Tooltip } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { GlobalTable, Popconfirm, GlobalSearch } from "@components";
-import { subCategory } from "@service";
-import { SubCategory } from "@modals";
+import { brands, category } from "@service";
+import { Brands } from "@modals";
 import { openNotification } from "@utils";
 import { Record, Update, Pagination } from "@types";
 const initialValue = { id: 0, name: "", parent_category_id: 0 };
 
 const Index = () => {
-   const { id } = useParams();
    const [open, setOpen] = useState(false);
    const [data, setData] = useState([]);
    const [total, setTotal] = useState();
    const [update, setUpdate] = useState<Update>(initialValue);
+   const [categories, setCategories] = useState([]);
    const [params, setParams] = useState({
       search: "",
       limit: 5,
@@ -25,6 +25,7 @@ const Index = () => {
 
    useEffect(() => {
       getData();
+      getCategory();
    }, [params]);
    useEffect(() => {
       const params = new URLSearchParams(search);
@@ -47,20 +48,20 @@ const Index = () => {
       setUpdate(initialValue);
    };
    const getData = async () => {
-      const res = await subCategory.get(Number(id), params);
+      const res = await brands.get(params);
       if (res.status === 200) {
-         setData(res.data?.data?.subcategories);
+         setData(res.data?.data?.brands);
          setTotal(res.data?.data?.count);
       }
    };
    const deleteData = async (id: number) => {
       try {
-         const res = await subCategory.delete(id);
+         const res = await brands.delete(id);
          if (res.status === 200) {
             getData();
             openNotification({
                type: "success",
-               message: "Sub Category deleted successfully",
+               message: "Brand deleted successfully",
             });
          }
       } catch (error) {
@@ -74,6 +75,12 @@ const Index = () => {
    const editData = (data: Record) => {
       setUpdate(data);
       openModal();
+   };
+   const getCategory = async () => {
+      const res = await category.get({});
+      if (res.status === 200) {
+         setCategories(res?.data?.data?.categories);
+      }
    };
    const handleTableChange = (pagination: Pagination) => {
       const { current, pageSize } = pagination;
@@ -103,9 +110,14 @@ const Index = () => {
             (params.page - 1) * params.limit + index + 1,
       },
       {
-         title: "Subcategory Name",
+         title: "Name",
          dataIndex: "name",
          key: "name",
+      },
+      {
+         title: "Decription",
+         dataIndex: "description",
+         key: "description",
       },
       {
          title: "Action",
@@ -114,8 +126,8 @@ const Index = () => {
          render: (_: string, record: Record) => (
             <div className="flex gap-6">
                <Popconfirm
-                  title="Delete subcategory?"
-                  description="Are you sure to delete this subcategory?"
+                  title="Delete brand?"
+                  description="Are you sure to delete this brand?"
                   okText="Yes"
                   cancelText="No"
                   onConfirm={() => deleteData(record.id)}
@@ -138,16 +150,16 @@ const Index = () => {
 
    return (
       <>
-         <SubCategory
+         <Brands
             open={open}
             handleClose={handleClose}
             update={update}
             getData={getData}
-            parentId={Number(id)}
+            categories={categories}
          />
          <div className="flex justify-between mb-10">
             <GlobalSearch
-               placeholder="Search Sub Category..."
+               placeholder="Search Brands..."
                searchParamKey="search"
                onSearch={handleSearch}
             />
@@ -156,7 +168,7 @@ const Index = () => {
                onClick={openModal}
                className="rounded-lg px-4 py-5"
             >
-               <span className="ml-2">Add Subcategory</span>
+               <span className="ml-2">Add Brand</span>
             </Button>
          </div>
          <GlobalTable

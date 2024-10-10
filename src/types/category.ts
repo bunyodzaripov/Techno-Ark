@@ -6,11 +6,12 @@ export interface Update {
 }
 
 export interface ModalProps {
+   categories?: Record[];
    parentId?: number;
    open: boolean;
    handleClose: () => void;
    getData: () => void;
-   update: Update | undefined;
+   update: Update;
 }
 
 ///////////////////////// Global Category Table ////////////////////////

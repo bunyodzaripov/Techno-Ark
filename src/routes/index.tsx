@@ -12,6 +12,7 @@ import {
    Products,
    SubCategory,
    Category,
+   Brands,
 } from "@pages";
 
 const Index = () => {
@@ -24,6 +25,7 @@ const Index = () => {
                <Route index element={<Products />} />
                <Route path="category" element={<Category />} />
                <Route path="category/:id" element={<SubCategory />} />
+               <Route path="brands" element={<Brands />} />
             </Route>
          </Route>
       )

@@ -17,6 +17,11 @@ interface BrandUpdate {
    categoryId: number;
 }
 
+interface BrandCategoryValues {
+   name: string;
+   brand_id: number;
+}
+
 export interface Category {
    create: (data: string) => Promise<any>;
    get: (params: Params) => Promise<any>;
@@ -42,4 +47,12 @@ export interface Brands {
    update: (id: number, data: BrandUpdate) => Promise<any>;
    delete: (id: number) => Promise<any>;
    getCategory: (id: number) => Promise<any>;
+}
+
+export interface BrandCategory {
+   create: (data: BrandCategoryValues) => Promise<any>;
+   get: (params: Params) => Promise<any>;
+   update: (id: number, data: BrandCategoryValues) => Promise<any>;
+   delete: (id: number) => Promise<any>;
+   getBrand: (id: number) => Promise<any>;
 }

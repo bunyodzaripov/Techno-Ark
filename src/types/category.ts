@@ -7,10 +7,12 @@ export interface Update {
    file?: File | string;
    categoryId: number;
    category_id: number;
+   brand_id?: number;
 }
 
 export interface ModalProps {
    categories?: Record[];
+   brandsData?: Record[];
    parentId?: number;
    open: boolean;
    handleClose: () => void;

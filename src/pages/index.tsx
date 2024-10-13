@@ -6,6 +6,7 @@ import Category from "./category";
 import SubCategory from "./sub-category";
 import Brands from "./brands";
 import BrandCategory from "./brand-category";
+import ProductDetails from "./product-details";
 export {
    SignIn,
    SignUp,
@@ -15,4 +16,5 @@ export {
    SubCategory,
    Brands,
    BrandCategory,
+   ProductDetails,
 };

@@ -1,5 +1,6 @@
 import { SignIn, SignUp } from "./auth";
 
+//////////////////////// Params ////////////////////////
 interface Params {
    page?: number;
    limit?: number;
@@ -21,6 +22,8 @@ interface BrandCategoryValues {
    name: string;
    brand_id: number;
 }
+
+//////////////////////// Services ////////////////////////
 
 export interface Category {
    create: (data: string) => Promise<any>;
@@ -55,4 +58,12 @@ export interface BrandCategory {
    update: (id: number, data: BrandCategoryValues) => Promise<any>;
    delete: (id: number) => Promise<any>;
    getBrand: (id: number) => Promise<any>;
+}
+
+export interface Products {
+   create: (data: string) => Promise<any>;
+   get: (params: Params) => Promise<any>;
+   getOne: (id: number) => Promise<any>;
+   update: (id: number, data: string) => Promise<any>;
+   delete: (id: number) => Promise<any>;
 }

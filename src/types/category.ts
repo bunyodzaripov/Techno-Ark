@@ -23,7 +23,7 @@ export interface ModalProps {
 ///////////////////////// Global Category Table ////////////////////////
 export interface Record extends Update {
    createdAt: string;
-   image?: any;
+   image?: File | string;
    lastUpdateAt: string;
 }
 

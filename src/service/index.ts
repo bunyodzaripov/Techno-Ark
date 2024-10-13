@@ -3,4 +3,5 @@ import category from "./category";
 import subCategory from "./sub-category";
 import brands from "./brands";
 import brandCategory from "./brand-category";
-export { auth, category, subCategory, brands, brandCategory };
+import products from "./products";
+export { auth, category, subCategory, brands, brandCategory, products };
